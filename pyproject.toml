@@ -1,0 +1,46 @@
+
+[tool.isort]
+line_length = 100
+profile = "django"
+combine_as_imports = true
+include_trailing_comma = true
+
+[tool.black]
+line_length = 100
+target_version = ["py310"]
+include = '\.pyi?$'
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = [
+    "B",
+    "BLE",
+    "C4",
+    "ERA",
+    "I",
+    "ICN",
+    "INP",
+    "ISC",
+    "N",
+    "PGH",
+    "PTH",
+    "PIE",
+    "PL",
+    "Q",
+    "RET",
+    "RSE",
+    "RUF",
+    "S",
+    "SIM",
+    "T20",
+    "TCH",
+    "TID",
+    "YTT",
+    "DJ",
+    "UP",
+]
+ignore = ["E402", "E501", "B008", "UP035", "N818", "E741"]
+fixable = ["E", "F", "W", "C", "B", "Q", "I001", "Q000"]

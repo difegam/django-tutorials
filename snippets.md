@@ -13,6 +13,10 @@ To install poetry please follow the instructions on the [poetry website](https:/
 in-project = true
 ```
 
+```shell
+echo -e "[virtualenvs]\nin-project = true" > poetry.md
+```
+
 ## Start a Django project using poetry
 
 Create a new project directory
@@ -30,7 +34,7 @@ poetry run python -m pip install --upgrade pip
 Add django and python-dotenv to the project
 
 ```shell
-poetry add django python-dotenv
+poetry add django@4.1 python-dotenv
 ```
 
 Add development dependencies
@@ -39,7 +43,7 @@ Add development dependencies
 - djlint
 
 ```shell
-poetry add djlint pytest@7.* -D
+poetry add djlint pytest@7.4 -D
 ```
 
 Create a new django project in the current directory
