@@ -46,8 +46,12 @@ repos:
         types: [python]
         args:
           [
-            "-rn", # Only display messages
+            "-ry", # Only display messages
             "-sn", # Don't display the score
+            "--output-format=colorized",
+            "--load-plugins=pylint_django,pylint_django.checkers.migrations",
+            "--django-settings-module=django-by-example.dgamboa-blog.dgamboa_blog.dgamboa.settings",
+            "--ignore=manage.py"
           ]
 
   - repo: https://github.com/psf/black
