@@ -1,24 +1,9 @@
 [tool.poetry]
-name = "django-tutorials"
+name = "DJango Tutorials"
 version = "0.1.0"
-description = ""
+description = "DGamboa"
 authors = ["difegam <difegam3@gmail.com>"]
 readme = "README.md"
-packages = [{ include = "django_tutorials" }]
-
-[tool.poetry.dependencies]
-python = "^3.10"
-django = "4.1"
-django-environ = "^0.11.2"
-
-
-[tool.poetry.group.dev.dependencies]
-pylint-django = "^2.5.5"
-
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
-
 
 [tool.isort]
 line_length = 100

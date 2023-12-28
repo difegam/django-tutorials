@@ -63,3 +63,6 @@ poetry run py manage.py startapp app_name
 ```shell
 poetry run python manage.py runserver
 ```
+
+
+python -m venv .venv_global
