@@ -27,7 +27,7 @@ class Post(models.Model):
     )
 
     class Meta:
-        ordering = ("-publish",)  # - means from newest to oldest
+        ordering = ("-publish",)  # `-` means from newest to oldest
         indexes = (
             models.Index(
                 fields=["publish"],
