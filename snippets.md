@@ -31,10 +31,10 @@ Update pip to the latest version
 poetry run python -m pip install --upgrade pip
 ```
 
-Add django and python-dotenv to the project
+Add `django` and `django-environ` to the project
 
 ```shell
-poetry add django@4.1 python-dotenv
+poetry add django@4.1 django-environ
 ```
 
 Add development dependencies
@@ -64,5 +64,10 @@ poetry run py manage.py startapp app_name
 poetry run python manage.py runserver
 ```
 
+# SQL Migrate
 
-python -m venv .venv_global
+`sqlmigrate` Prints the SQL for the named migration. The `sqlmigrate` command takes migration names and returns their SQL: `django-admin sqlmigrate app_label migration_name`
+
+```shell
+manage.py sqlmigrate blog 0001
+```
