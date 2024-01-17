@@ -6,6 +6,12 @@
 poetry run python manage.py runserver
 ```
 
+## Create superuser:
+
+```bash title="Create superuser"
+poetry run python manage.py createsuperuser
+```
+
 ## Shell
 
 ```bash

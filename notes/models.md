@@ -73,3 +73,9 @@ class Post(models.Model):
     status_list = list(Status.objects.all().values_list('value', 'label'))
     status = models.CharField(max_length=2, choices=status_list)
 ```
+
+## Referencing the `User` model - `get_user_model()`
+
+Rather than directly referencing the User, it's recommended to use the [`get_user_model()`][4] method from django.contrib.auth. This method fetches the currently active user model - if a custom user model is defined, it will return that; otherwise, it returns the User.
+
+[4]: https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#django.contrib.auth.get_user_model
