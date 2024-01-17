@@ -3,6 +3,14 @@ from django.db import models
 from django.utils import timezone
 
 
+# Custom model manager for published posts
+class PostPublishedManager(models.Manager):
+    """Custom model manager for published posts"""
+
+    def get_queryset(self):
+        return super().get_queryset().filter(status="PB")
+
+
 # Create your models here.
 class Post(models.Model):
     class Status(models.TextChoices):
@@ -25,6 +33,14 @@ class Post(models.Model):
         choices=Status.choices,
         default=Status.DRAFT,
     )
+
+    # Model managers
+    # If you define a custom manager, you have to explicitly define the default manager
+    objects = models.Manager()  # default manager
+
+    # Custom manager allow to retrieve all published posts
+    # Post.published.all() instead of Post.objects.all().filter(status="PB")
+    published = PostPublishedManager()  # custom manager
 
     class Meta:
         ordering = ("-publish",)  # `-` means from newest to oldest
