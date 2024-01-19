@@ -79,3 +79,18 @@ class Post(models.Model):
 Rather than directly referencing the User, it's recommended to use the [`get_user_model()`][4] method from django.contrib.auth. This method fetches the currently active user model - if a custom user model is defined, it will return that; otherwise, it returns the User.
 
 [4]: https://docs.djangoproject.com/en/5.0/topics/auth/customizing/#django.contrib.auth.get_user_model
+
+## Model Attributes
+
+### unique_for_date
+
+The `unique_for_date` attribute can be used to enforce uniqueness of a field for a given date. For example, if you want to ensure that slug is unique for a given date, you can use the following:
+
+```Python
+from django.db import models
+
+Post(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(unique_for_date='published_at')
+    published_at = models.DateTimeField()
+```
