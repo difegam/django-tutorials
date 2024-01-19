@@ -51,8 +51,18 @@ class Post(models.Model):
             ),  # indexes improve performance when filtering or sorting
         )
 
-    def __str__(self):
+    def __str__(self) -> str:
+        """Return a string representation of a post"""
         return self.title
 
-    def get_absolute_url(self):
-        return reverse("blog:post_detail", kwargs={"id": self.id})
+    def get_absolute_url(self) -> str:
+        """Return the canonical URL for a post"""
+        return reverse(
+            "blog:post_detail",
+            kwargs={
+                "year": self.publish.year,
+                "month": self.publish.month,
+                "day": self.publish.day,
+                "slug": self.slug,
+            },
+        )

@@ -6,7 +6,11 @@ app_name = "blog"  # Application namespace to avoid conflicts with other apps
 
 urlpatterns = [
     path("", views.post_list, name="post_list"),
-    path("<int:id>/", views.post_detail, name="post_detail"),
+    path(
+        "<int:year>/<int:month>/<int:day>/<slug:slug>/",  # SEO friendly URL
+        views.post_detail,
+        name="post_detail",
+    ),
 ]
 # Any value specified in the url pattern is capture as a string
 # You can use path converters to capture other data types
