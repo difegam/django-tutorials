@@ -5,7 +5,9 @@ from . import views
 app_name = "blog"  # Application namespace to avoid conflicts with other apps
 
 urlpatterns = [
-    path("", views.post_list, name="post_list"),
+    # Post views
+    # path("", views.post_list, name="post_list"),             # Function based view
+    path("", views.PostListView.as_view(), name="post_list"),  # Class based view
     path(
         "<int:year>/<int:month>/<int:day>/<slug:slug>/",  # SEO friendly URL
         views.post_detail,
