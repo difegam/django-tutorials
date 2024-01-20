@@ -15,5 +15,9 @@
         <p class="date">Published {{ post.publish }} by {{ post.author }}</p>
         {{ post.body|truncatewords:30|linebreaks }}
     {% endfor %}
-    {% include "pagination.html" with page=posts %}
+    {% comment "pagination func view" %}
+        {% include "pagination.html" with page=posts %}
+        for ListView generic view page request object is stored in page_obj
+    {% endcomment %}
+    {% include  "pagination.html" with page=page_obj %}
 {% endblock content %}
