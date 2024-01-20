@@ -1,13 +1,24 @@
-from math import e
-
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
+from django.views.generic import ListView
 
 from .models import Post
 
 
+# Post List view
+class PostListView(ListView):
+    """List all published posts using class based view"""
+
+    queryset = Post.published.all()
+    context_object_name = "posts"
+    paginate_by = 3
+    template_name = "blog/post/list.html"
+
+
 def post_list(request) -> HttpResponse:
+    """List all published posts using function based view"""
+
     posts = Post.published.all()
     # paginator -> 3 posts per page
     paginator = Paginator(posts, 3)  # Create a paginator object
@@ -22,6 +33,7 @@ def post_list(request) -> HttpResponse:
     return render(request, "blog/post/list.html", {"posts": posts_on_page})
 
 
+# Post Detail view
 def post_detail(request, year: int, month: int, day: int, slug: str) -> HttpResponse:
     """Retrieve a published post by id"""
     post = get_object_or_404(
