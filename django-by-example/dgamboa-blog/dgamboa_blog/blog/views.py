@@ -1,8 +1,11 @@
+from dgamboa_blog.dgamboa.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.generic import ListView
 
+from .forms import EmailPostForm
 from .models import Post
 
 
@@ -45,3 +48,33 @@ def post_detail(request, year: int, month: int, day: int, slug: str) -> HttpResp
         publish__day=day,
     )
     return render(request, "blog/post/detail.html", {"post": post})
+
+
+# Form view
+def post_share(request, post_id: int) -> HttpResponse:
+    """Share a post by email"""
+    post = get_object_or_404(Post, id=post_id, status=Post.Status.PUBLISHED)
+    sent = False
+    if request.method == "POST":  # Form was submitted
+        form = EmailPostForm(request.POST)
+        if form.is_valid():  # Form fields passed validation
+            cleaned_data = form.cleaned_data
+            print(cleaned_data, EMAIL_HOST_USER)
+            subject = f"{cleaned_data['name']} recommends you read {post.title}"
+            message = (
+                f"Read {post.title} at {post.get_absolute_url()}\n\n"
+                f"{cleaned_data['name']}'s comments: {cleaned_data['comments']}"
+            )
+            send_mail(
+                subject,
+                message,
+                EMAIL_HOST_USER,
+                [cleaned_data["to"]],
+                fail_silently=False,
+            )
+            sent = True
+    else:
+        form = EmailPostForm()
+    return render(
+        request, "blog/post/share.html", {"post": post, "form": form, "sent": sent}
+    )

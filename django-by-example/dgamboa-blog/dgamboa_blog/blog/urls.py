@@ -13,6 +13,12 @@ urlpatterns = [
         views.post_detail,
         name="post_detail",
     ),
+    # Email post to a friend
+    path(
+        "<int:post_id>/share/",
+        views.post_share,
+        name="post_share",
+    ),
 ]
 # Any value specified in the url pattern is capture as a string
 # You can use path converters to capture other data types
