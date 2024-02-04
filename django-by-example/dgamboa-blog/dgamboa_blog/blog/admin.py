@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Post
+from .models import Comment, Post
 
 
 # Register your models here.
@@ -18,6 +18,13 @@ class PostAdmin(admin.ModelAdmin):
     prepopulated_fields = {
         "slug": ("title",)
     }  # Slug field will be filled automatically
-    raw_id_fields = ("author",)  # Lookup author instead of dropdown 
+    raw_id_fields = ("author",)  # Lookup author instead of dropdown
     date_hierarchy = "publish"  # Generate navigation by date
     ordering = ("status", "publish")
+
+
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin):
+    list_display = ("name", "email", "post", "created", "active")
+    list_filter = ("active", "created", "updated")
+    search_fields = ("name", "email", "body")
