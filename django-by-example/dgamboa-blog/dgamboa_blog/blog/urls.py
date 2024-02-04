@@ -19,6 +19,8 @@ urlpatterns = [
         views.post_share,
         name="post_share",
     ),
+    # Comment on a post
+    path("<int:post_id>/comment/", views.post_comment, name="post_comment"),
 ]
 # Any value specified in the url pattern is capture as a string
 # You can use path converters to capture other data types
