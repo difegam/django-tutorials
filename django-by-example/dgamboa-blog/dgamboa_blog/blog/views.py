@@ -1,6 +1,7 @@
 from dgamboa_blog.dgamboa.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import Count
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
@@ -60,6 +61,15 @@ def post_detail(request, year: int, month: int, day: int, slug: str) -> HttpResp
     comments = post.comments.filter(active=True)
     form = CommentForm()
 
+    # List of similar posts
+    post_tags_ids = post.tags.values_list("id", flat=True)
+    similar_posts = (
+        Post.published.filter(tags__in=post_tags_ids)  # Get posts with same tags
+        .exclude(id=post.id)  # Exclude current post
+        .annotate(same_tags=Count("tags"))  # Count the number of tags in common
+        .order_by("-same_tags", "-publish")[:4]  # Order by tags & publish date
+    )
+
     return render(
         request,
         "blog/post/detail.html",
@@ -67,6 +77,7 @@ def post_detail(request, year: int, month: int, day: int, slug: str) -> HttpResp
             "post": post,
             "comments": comments,
             "form": form,
+            "similar_posts": similar_posts,
         },
     )
 
