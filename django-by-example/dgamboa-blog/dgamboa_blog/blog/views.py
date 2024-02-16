@@ -1,5 +1,3 @@
-import re
-
 from dgamboa_blog.dgamboa.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
 from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
@@ -7,9 +5,10 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, render
 from django.views.decorators.http import require_POST
 from django.views.generic import ListView
+from taggit.models import Tag
 
 from .forms import CommentForm, EmailPostForm
-from .models import Comment, Post
+from .models import Post
 
 
 # Post List view
@@ -22,10 +21,17 @@ class PostListView(ListView):
     template_name = "blog/post/list.html"
 
 
-def post_list(request) -> HttpResponse:
+def post_list(request, tag_slug=None) -> HttpResponse:
     """List all published posts using function based view"""
 
     posts = Post.published.all()
+
+    # filter by tag
+    tag = None
+    if tag_slug:
+        tag = get_object_or_404(Tag, slug=tag_slug)
+        posts = posts.filter(tags__in=[tag])
+
     # paginator -> 3 posts per page
     paginator = Paginator(posts, 3)  # Create a paginator object
     page_number = request.GET.get("page", 1)  # Get page number, default 1
@@ -36,7 +42,7 @@ def post_list(request) -> HttpResponse:
     except PageNotAnInteger:  # If page is not an integer
         posts_on_page = paginator.page(1)  # return first page
 
-    return render(request, "blog/post/list.html", {"posts": posts_on_page})
+    return render(request, "blog/post/list.html", {"posts": posts_on_page, "tag": tag})
 
 
 # Post Detail view
