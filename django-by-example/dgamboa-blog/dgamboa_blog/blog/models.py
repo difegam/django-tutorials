@@ -2,6 +2,7 @@ from django.contrib.auth import get_user_model
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 # Custom model manager for published posts
@@ -34,6 +35,9 @@ class Post(models.Model):
         choices=Status.choices,
         default=Status.DRAFT,
     )
+
+    # Tags
+    tags = TaggableManager()
 
     # Model managers
     # If you define a custom manager, you have to explicitly define the default manager
