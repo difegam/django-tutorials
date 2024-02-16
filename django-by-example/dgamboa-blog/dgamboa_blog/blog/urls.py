@@ -6,8 +6,11 @@ app_name = "blog"  # Application namespace to avoid conflicts with other apps
 
 urlpatterns = [
     # Post views
-    # path("", views.post_list, name="post_list"),             # Function based view
-    path("", views.PostListView.as_view(), name="post_list"),  # Class based view
+    path("", views.post_list, name="post_list"),  # Function based view
+    path(
+        "tag/<slug:tag_slug>", views.post_list, name="post_list_by_tag"
+    ),  # Function based view
+    # path("", views.PostListView.as_view(), name="post_list"),  # Class based view
     path(
         "<int:year>/<int:month>/<int:day>/<slug:slug>/",  # SEO friendly URL
         views.post_detail,
