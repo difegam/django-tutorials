@@ -12,7 +12,12 @@
                 <a href="{% url 'blog:post_detail' post.id %}">{{ post.title }}</a>
             {% endcomment %}
             <a href="{{ post.get_absolute_url }}">{{ post.title }}</a>
-            <p class="tags">Tags: {{ post.tags.all|join:", " }}</p>
+            <p class="tags">
+                Tags:
+                {% for tag in post.tags.all %}
+                    <a href="{% url 'blog:post_list_by_tag' tag.slug %}">{{ tag.name }}</a>
+                {% endfor %}
+            </p>
         </h2>
         <p class="date">Published {{ post.publish }} by {{ post.author }}</p>
         {{ post.body|truncatewords:30|linebreaks }}
