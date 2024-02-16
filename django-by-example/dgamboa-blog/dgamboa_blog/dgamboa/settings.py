@@ -10,7 +10,6 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
-
 from pathlib import Path
 
 import environ
@@ -38,15 +37,24 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "blog",  # new
 ]
+
+EXTERNAL_APPS = [
+    "taggit",
+]
+
+OWN_APPS = [
+    "blog",
+]
+
+INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + OWN_APPS
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
