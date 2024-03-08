@@ -3,3 +3,4 @@
 # - https://docs.djangoproject.com/en/5.0/howto/custom-management-commands/
 # - https://docs.python.org/3/library/argparse.html
 # - https://simpleisbetterthancomplex.com/tutorial/2018/08/27/how-to-create-custom-django-management-commands.html
+# - https://github.com/bugbytes-io/django-modelchoicefield-demo/blob/master/core/management/commands/load_cars.py
