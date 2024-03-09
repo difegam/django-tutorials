@@ -18,7 +18,9 @@ class Command(BaseCommand):
         count = posts.count()
 
         if dry_run:
-            self.stdout.write(self.style.MIGRATE_LABEL("{:^50s}".format("Running in dry-run mode")))
+            self.stdout.write(
+                self.style.MIGRATE_LABEL("{:-^50s}".format(" Running in dry-run mode "))
+            )
             self.stdout.write(self.style.WARNING(f"Deleting {posts.count()} posts"))
             return
 
