@@ -40,20 +40,19 @@ def get_api_data(url: str, params: Params | None = None) -> dict:
     return response.json()
 
 
-def create_posts(data: list[dict], user_id: int = 1) -> list[Post]:
+def create_posts(data: list[dict], user_id: int = 1) -> None:
     """Create posts from dummy data"""
     user = User.objects.get(id=user_id)
-    return [
-        Post(
-            title=post["title"],
-            slug=slugify(post["title"]),
-            body=post["body"],
+    for post_data in data:
+        post = Post(
+            title=post_data["title"],
+            slug=slugify(post_data["title"]),
+            body=post_data["body"],
             author=user,
-            tags=post["tags"],
             status=choice([Post.Status.PUBLISHED, Post.Status.DRAFT]),
         )
-        for post in data
-    ]
+        post.save()
+        post.tags.add(*post_data["tags"])
 
 
 class Command(BaseCommand):
@@ -83,8 +82,7 @@ class Command(BaseCommand):
         params = {"limit": limit, "skip": skip}
         posts = get_api_data(POSTS_URL, params)
         dummy_data = DummyData(**posts)
-        posts = create_posts(dummy_data.list_posts())
-        post_objs = Post.objects.bulk_create(posts)
+        create_posts(dummy_data.list_posts())
 
         self.stdout.write(
             self.style.SUCCESS(
