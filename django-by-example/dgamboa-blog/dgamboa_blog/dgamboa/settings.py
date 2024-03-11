@@ -48,6 +48,7 @@ DJANGO_APPS = [
 
 EXTERNAL_APPS = [
     "taggit",
+    "django_extensions",
 ]
 
 OWN_APPS = [
