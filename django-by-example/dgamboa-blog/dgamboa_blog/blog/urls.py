@@ -1,6 +1,7 @@
 from django.urls import path
 
 from . import views
+from .feeds import LatestPostsFeed  # Import the feed class from the feeds.py file
 
 app_name = "blog"  # Application namespace to avoid conflicts with other apps
 
@@ -24,6 +25,7 @@ urlpatterns = [
     ),
     # Comment on a post
     path("<int:post_id>/comment/", views.post_comment, name="post_comment"),
+    path("feed/", LatestPostsFeed(), name="post_feed"),
 ]
 # Any value specified in the url pattern is capture as a string
 # You can use path converters to capture other data types
