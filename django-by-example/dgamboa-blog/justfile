@@ -1,0 +1,31 @@
+# Available recipes
+_default:
+    @just --list --unsorted --list-prefix "    > " --justfile {{justfile()}}
+
+# Run pre-commit hooks
+pre-commit:
+    @pre-commit run --all-files
+
+# Run Development Server
+run-server:
+    @echo "Running server... 🚀"
+    @poetry run python dgamboa_blog/manage.py runserver
+
+# Activate Shell
+shell:
+    @echo "Running shell... 🐚"
+    @poetry run python dgamboa_blog/manage.py shell
+
+# Make migrations
+makemigrations:
+    @echo "Creating migrations... 📄"
+    @poetry run python dgamboa_blog/manage.py makemigrations
+
+# Migrate
+migrate:
+    @echo "Migrating... 🚚"
+    @poetry run python dgamboa_blog/manage.py migrate
+
+run-docker:
+    @echo "Running Docker... 🐳"
+    @docker compose up --force-recreate --remove-orphans -d
