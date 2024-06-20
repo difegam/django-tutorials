@@ -1,3 +1,5 @@
+from calendar import c
+
 from django import forms
 
 from .models import Comment
@@ -23,3 +25,9 @@ class CommentForm(forms.ModelForm):
             ("email", "Your email"),
             ("body", "Your comment"),
         )
+
+
+class SearchForm(forms.Form):
+    """Form to search posts"""
+
+    query = forms.CharField(label="Search")
