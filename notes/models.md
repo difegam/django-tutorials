@@ -94,3 +94,57 @@ Post(models.Model):
     slug = models.SlugField(unique_for_date='published_at')
     published_at = models.DateTimeField()
 ```
+
+# The Django admin site
+
+The Django admin site is a built-in application that allows you to perform CRUD operations on your models. To use the admin site, you need to register your models with the admin site.
+
+```Python
+from django.contrib import admin
+from .models import Post
+
+admin.site.register(Post)
+```
+
+You can also use the `@admin.register` decorator to register your models.
+
+```Python
+from django.contrib import admin
+from .models import Post
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    pass
+```
+
+> See [Django admin site][django-admin-site] for more information.
+
+[django-admin-site]: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/
+
+## Customizing the admin site
+
+You can customize the admin site by creating a custom admin class and overriding the default behavior.
+
+```Python
+from django.contrib import admin
+from .models import Post
+
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin):
+    list_display = ('title', 'published_at')
+    list_filter = ('published_at',)
+    search_fields = ('title',)
+```
+
+<!-- Create table -->
+| Field | Description | Documentation |
+| --- | --- | --- |
+| `list_display` | A list of fields to display in the admin list view. | [Django admin list_display][list_display] |
+| `list_filter` | A list of fields to filter the admin list view. | [Django admin list_filter][list_filter] |
+| `search_fields` | A list of fields to search in the admin list view. | [Django admin search_fields][raw_id_fields] |
+|`raw_id_fields` | In Django, raw_id_fields is used in the admin interface for ForeignKey fields when there are too many related instances. Instead of a drop-down list, it provides a text input field with a search icon, letting users enter the ID directly. | [Django admin raw_id_fields][raw_id_fields] |
+
+[list_display]: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_display
+[list_filter]: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.list_filter
+[search_fields]: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.search_fields
+[raw_id_fields]: https://docs.djangoproject.com/en/5.0/ref/contrib/admin/#django.contrib.admin.ModelAdmin.raw_id_fields
